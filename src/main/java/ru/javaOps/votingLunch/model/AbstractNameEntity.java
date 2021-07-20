@@ -7,4 +7,17 @@ public abstract class AbstractNameEntity extends AbstractBaseEntity {
         super(id);
         this.name = name;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + '(' + name + ')';
+    }
 }
