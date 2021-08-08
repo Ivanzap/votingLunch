@@ -1,10 +1,12 @@
 package ru.javaOps.votingLunch.repository.datajpa;
 
+import org.springframework.stereotype.Repository;
 import ru.javaOps.votingLunch.model.User;
 import ru.javaOps.votingLunch.repository.UserRepository;
 
 import java.util.List;
 
+@Repository
 public class DataJpaUserRepository implements UserRepository {
     @Override
     public User save(User user) {

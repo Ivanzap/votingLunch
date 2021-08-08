@@ -1,7 +1,9 @@
 package ru.javaOps.votingLunch.web.user;
 
+import org.springframework.stereotype.Controller;
 import ru.javaOps.votingLunch.model.User;
 
+@Controller
 public class ProfileRestController extends AbstractUserController {
     @Override
     public void update(User user, int id) {

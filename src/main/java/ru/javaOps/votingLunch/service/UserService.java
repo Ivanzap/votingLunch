@@ -1,5 +1,7 @@
 package ru.javaOps.votingLunch.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.javaOps.votingLunch.model.User;
 import ru.javaOps.votingLunch.repository.UserRepository;
 
@@ -8,10 +10,14 @@ import java.util.List;
 import static ru.javaOps.votingLunch.util.ValidationUtil.checkNotFound;
 import static ru.javaOps.votingLunch.util.ValidationUtil.checkNotFoundWithId;
 
-
+@Service
 public class UserService {
 
-    private UserRepository repository;
+    private final UserRepository repository;
+
+    public UserService(UserRepository repository) {
+        this.repository = repository;
+    }
 
     public User create(User user) {
         return repository.save(user);

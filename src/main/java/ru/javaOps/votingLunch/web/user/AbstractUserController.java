@@ -2,6 +2,7 @@ package ru.javaOps.votingLunch.web.user;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.javaOps.votingLunch.model.User;
 import ru.javaOps.votingLunch.service.UserService;
 
@@ -13,6 +14,7 @@ import static ru.javaOps.votingLunch.util.ValidationUtil.checkNew;
 public abstract class AbstractUserController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
+    @Autowired
     private UserService service;
 
     public User create(User user) {
