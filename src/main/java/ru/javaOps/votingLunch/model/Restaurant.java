@@ -1,24 +1,24 @@
 package ru.javaOps.votingLunch.model;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Restaurant extends AbstractNameEntity {
-    private LocalDateTime registered;
+    private Date registered;
 
     public Restaurant(Integer id, String name) {
         super(id, name);
     }
 
-    public Restaurant(Integer id, String name, LocalDateTime registered) {
+    public Restaurant(Integer id, String name, Date registered) {
         super(id, name);
         this.registered = registered;
     }
 
-    public LocalDateTime getRegistered() {
+    public Date getRegistered() {
         return registered;
     }
 
-    public void setRegistered(LocalDateTime registered) {
+    public void setRegistered(Date registered) {
         this.registered = registered;
     }
 }
