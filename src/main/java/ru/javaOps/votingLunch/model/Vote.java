@@ -9,6 +9,9 @@ public class Vote extends AbstractBaseEntity {
 
     private LocalDateTime dateTime;
 
+    public Vote() {
+    }
+
     public Vote(Integer id) {
         super(id);
     }

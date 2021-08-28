@@ -5,6 +5,9 @@ import java.util.Date;
 public class Restaurant extends AbstractNameEntity {
     private Date registered;
 
+    public Restaurant() {
+    }
+
     public Restaurant(Integer id, String name) {
         super(id, name);
     }

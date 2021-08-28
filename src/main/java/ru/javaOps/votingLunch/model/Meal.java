@@ -9,6 +9,9 @@ public class Meal extends AbstractNameEntity {
 
     private LocalDateTime dateTime;
 
+    public Meal() {
+    }
+
     public Meal(Integer id, String name) {
         super(id, name);
     }
