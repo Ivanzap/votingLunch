@@ -8,9 +8,16 @@ import java.util.List;
 
 @Repository
 public class DataJpaUserRepository implements UserRepository {
+
+    private final CrudUserRepository crudRepository;
+
+    public DataJpaUserRepository(CrudUserRepository crudRepository) {
+        this.crudRepository = crudRepository;
+    }
+
     @Override
     public User save(User user) {
-        return null;
+        return crudRepository.save(user);
     }
 
     @Override

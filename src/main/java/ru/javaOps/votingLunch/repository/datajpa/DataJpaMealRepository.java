@@ -1,5 +1,6 @@
 package ru.javaOps.votingLunch.repository.datajpa;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.javaOps.votingLunch.model.Meal;
 import ru.javaOps.votingLunch.repository.MealRepository;
