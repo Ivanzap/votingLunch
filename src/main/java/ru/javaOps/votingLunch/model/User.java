@@ -2,20 +2,42 @@ package ru.javaOps.votingLunch.model;
 
 import org.springframework.util.CollectionUtils;
 
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.Set;
 
+@Entity
+@Table(name = "users")
 public class User extends AbstractNameEntity {
+    @Column(name = "email", nullable = false, unique = true)
+    @Email
+    @NotBlank
+    @Size(max = 100)
     private String email;
 
+    @NotBlank
+    @Size(min = 5, max = 100)
+    @Column(name = "password", nullable = false)
     private String password;
 
+    @NotNull
+    @Column(name = "registered", nullable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
     private Date registered = new Date();
 
+    @Column(name = "enabled", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
     private boolean enabled = true;
 
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "role"}, name = "user_roles_idx")})
     private Set<Role> roles;
 
     public User() {
@@ -26,7 +48,7 @@ public class User extends AbstractNameEntity {
     }
 
     public User(User u) {
-        this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.isEnabled(), u.getRegistered(), u.getRoles());
+        this(u.id, u.name, u.email, u.password, u.enabled, u.registered, u.roles);
     }
 
     public User(Integer id, String name, String email, String password, Role role, Role... roles) {

@@ -1,10 +1,16 @@
 package ru.javaOps.votingLunch.model;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@MappedSuperclass
+@Access(AccessType.FIELD)
 public abstract class AbstractBaseEntity {
     public static final int START_SEQ = 100000;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GLOBAL_SEQ")
+    @SequenceGenerator(name = "GLOBAL_SEQ", sequenceName = "GLOBAL_SEQ", allocationSize = 1, initialValue = START_SEQ)
     protected Integer id;
 
     public AbstractBaseEntity() {

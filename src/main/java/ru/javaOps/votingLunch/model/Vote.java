@@ -1,10 +1,14 @@
 package ru.javaOps.votingLunch.model;
 
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
 public class Vote extends AbstractBaseEntity {
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
     private Restaurant restaurant;
 
     private LocalDateTime dateTime;
