@@ -5,14 +5,17 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
-import ru.javaOps.votingLunch.model.User;
+import ru.javaOps.votingLunch.model.Meal;
+
+import java.util.List;
 
 @Transactional(readOnly = true)
-public interface CrudUserRepository extends JpaRepository<User, Integer> {
+public interface CrudMealRepository extends JpaRepository<Meal, Integer> {
     @Modifying
     @Transactional
-    @Query("DELETE FROM User u WHERE u.id=:id")
+    @Query("DELETE FROM Meal m WHERE m.id=:id")
     int delete(@Param("id") int id);
 
-    User getByEmail(String email);
+    @Query("SELECT m FROM Meal m WHERE m.restaurant.id=:restaurantId AND m.dateTime=:today ORDER BY m.name")
+    List<Meal> getMenu(@Param("restaurantId") int restaurantId);
 }

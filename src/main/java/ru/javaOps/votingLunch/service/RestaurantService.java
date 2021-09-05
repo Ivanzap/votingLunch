@@ -17,23 +17,23 @@ public class RestaurantService {
         this.repository = repository;
     }
 
-    public Restaurant create(Restaurant restaurant, int userId) {
-        return repository.save(restaurant, userId);
+    public Restaurant create(Restaurant restaurant) {
+        return repository.save(restaurant);
     }
 
-    public void update(Restaurant restaurant, int userId) {
-        checkNotFoundWithId(repository.save(restaurant, userId), restaurant.getId());
+    public void update(Restaurant restaurant) {
+        checkNotFoundWithId(repository.save(restaurant), restaurant.getId());
     }
 
-    public void delete(int id, int userId) {
-        checkNotFoundWithId(repository.delete(id, userId), id);
+    public void delete(int id) {
+        checkNotFoundWithId(repository.delete(id), id);
     }
 
-    public Restaurant get(int id, int userId) {
-        return checkNotFoundWithId(repository.get(id, userId), id);
+    public Restaurant get(int id) {
+        return checkNotFoundWithId(repository.get(id), id);
     }
 
-    public List<Restaurant> getAll(int userId) {
-        return repository.getAll(userId);
+    public List<Restaurant> getAll() {
+        return repository.getAll();
     }
 }

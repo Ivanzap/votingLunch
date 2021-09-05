@@ -19,30 +19,30 @@ public abstract class AbstractRestaurantController {
     @Autowired
     private RestaurantService service;
 
-    public Restaurant create(Restaurant restaurant, int userId) {
-        log.info("create {} with id={}", restaurant, userId);
+    public Restaurant create(Restaurant restaurant) {
+        log.info("create {}", restaurant);
         checkNew(restaurant);
-        return service.create(restaurant, userId);
+        return service.create(restaurant);
     }
 
-    public void update(Restaurant restaurant, int userId) {
-        log.info("update {} with id={}", restaurant, userId);
-        assureIdConsistent(restaurant, userId);
-        service.update(restaurant, userId);
+    public void update(Restaurant restaurant, int id) {
+        log.info("update {} with id={}", restaurant, id);
+        assureIdConsistent(restaurant, id);
+        service.update(restaurant);
     }
 
-    public void delete(int id, int userId) {
+    public void delete(int id) {
         log.info("delete {}", id);
-        service.delete(id, userId);
+        service.delete(id);
     }
 
-    public Restaurant get(int id, int userId) {
+    public Restaurant get(int id) {
         log.info("get {}", id);
-        return service.get(id, userId);
+        return service.get(id);
     }
 
-    public List<Restaurant> getAll(int userId) {
+    public List<Restaurant> getAll() {
         log.info("getAll");
-        return service.getAll(userId);
+        return service.getAll();
     }
 }
