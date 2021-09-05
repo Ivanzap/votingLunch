@@ -19,6 +19,10 @@ public class Restaurant extends AbstractNameEntity {
     public Restaurant() {
     }
 
+    public Restaurant(Restaurant r) {
+        this(r.id, r.name, r.registered);
+    }
+
     public Restaurant(Integer id, String name) {
         super(id, name);
     }
@@ -42,5 +46,15 @@ public class Restaurant extends AbstractNameEntity {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Restaurant{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", registered=" + registered +
+                ", user=" + user +
+                '}';
     }
 }

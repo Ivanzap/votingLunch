@@ -17,12 +17,12 @@ public class VoteService {
         this.repository = repository;
     }
 
-    public Vote create(Vote vote, int userId) {
-        return repository.save(vote, userId);
+    public Vote create(Vote vote, int userId, int restaurantId) {
+        return repository.save(vote, userId, restaurantId);
     }
 
-    public void update(Vote vote, int userId) {
-        checkNotFoundWithId(repository.save(vote, userId), vote.getId());
+    public void update(Vote vote, int userId, int restaurantId) {
+        checkNotFoundWithId(repository.save(vote, userId, restaurantId), vote.getId());
     }
 
     public void delete(int id, int userId) {

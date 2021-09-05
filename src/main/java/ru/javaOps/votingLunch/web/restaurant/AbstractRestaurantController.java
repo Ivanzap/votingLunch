@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ru.javaOps.votingLunch.model.Restaurant;
 import ru.javaOps.votingLunch.service.RestaurantService;
+import ru.javaOps.votingLunch.util.SecurityUtil;
 
 import java.util.List;
 
@@ -20,20 +21,23 @@ public abstract class AbstractRestaurantController {
     private RestaurantService service;
 
     public Restaurant create(Restaurant restaurant) {
-        log.info("create {}", restaurant);
+        int userId = SecurityUtil.authUserId();
+        log.info("create {} by user {}", restaurant, userId);
         checkNew(restaurant);
-        return service.create(restaurant);
+        return service.create(restaurant, userId);
     }
 
     public void update(Restaurant restaurant, int id) {
+        int userId = SecurityUtil.authUserId();
         log.info("update {} with id={}", restaurant, id);
         assureIdConsistent(restaurant, id);
-        service.update(restaurant);
+        service.update(restaurant, userId);
     }
 
     public void delete(int id) {
-        log.info("delete {}", id);
-        service.delete(id);
+        int userId = SecurityUtil.authUserId();
+        log.info("delete {} by user {}", id, userId);
+        service.delete(id, userId);
     }
 
     public Restaurant get(int id) {

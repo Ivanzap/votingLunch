@@ -3,6 +3,7 @@ package ru.javaOps.votingLunch.repository.datajpa;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import ru.javaOps.votingLunch.model.Restaurant;
+import ru.javaOps.votingLunch.model.Role;
 import ru.javaOps.votingLunch.repository.RestaurantRepository;
 
 import java.util.List;
@@ -11,29 +12,41 @@ import java.util.List;
 public class DataJpaRestaurantRepository implements RestaurantRepository {
     private static final Sort SORT_NAME = Sort.by(Sort.Direction.ASC, "name");
 
-    private final CrudRestaurantRepository crudRepository;
+    private final CrudRestaurantRepository crudRestaurantRepository;
+    private final CrudUserRepository crudUserRepository;
 
-    public DataJpaRestaurantRepository(CrudRestaurantRepository crudRepository) {
-        this.crudRepository = crudRepository;
+    public DataJpaRestaurantRepository(CrudRestaurantRepository crudRestaurantRepository, CrudUserRepository crudUserRepository) {
+        this.crudRestaurantRepository = crudRestaurantRepository;
+        this.crudUserRepository = crudUserRepository;
     }
 
     @Override
-    public Restaurant save(Restaurant restaurant) {
-        return crudRepository.save(restaurant);
+    public Restaurant save(Restaurant restaurant, int userId) {
+        if (!restaurant.isNew() && get(restaurant.getId()) == null) {
+            return null;
+        }
+        if (!crudUserRepository.findById(userId).orElseThrow().getRoles().contains(Role.ADMIN)) {
+            return null;
+        }
+        restaurant.setUser(crudUserRepository.getById(userId));
+        return crudRestaurantRepository.save(restaurant);
     }
 
     @Override
-    public boolean delete(int id) {
-        return crudRepository.delete(id) != 0;
+    public Boolean delete(int id, int userId) {
+        if (!crudUserRepository.findById(userId).orElseThrow().getRoles().contains(Role.ADMIN)) {
+            return null;
+        }
+        return crudRestaurantRepository.delete(id) != 0;
     }
 
     @Override
     public Restaurant get(int id) {
-        return crudRepository.findById(id).orElse(null);
+        return crudRestaurantRepository.findById(id).orElse(null);
     }
 
     @Override
     public List<Restaurant> getAll() {
-        return crudRepository.findAll(SORT_NAME);
+        return crudRestaurantRepository.findAll(SORT_NAME);
     }
 }

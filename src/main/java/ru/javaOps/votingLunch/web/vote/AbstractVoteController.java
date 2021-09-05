@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ru.javaOps.votingLunch.model.Vote;
 import ru.javaOps.votingLunch.service.VoteService;
+import ru.javaOps.votingLunch.util.SecurityUtil;
 
 import java.util.List;
 
@@ -19,29 +20,36 @@ public abstract class AbstractVoteController {
     @Autowired
     private VoteService service;
 
-    public Vote create(Vote vote, int userId) {
-        log.info("create {} with id={}", vote, userId);
+    public Vote create(Vote vote) {
+        int userId = SecurityUtil.authUserId();
+        int restaurantId = SecurityUtil.authRestaurantId();
+        log.info("create {} by user {} restaurant {}", vote, userId, restaurantId);
         checkNew(vote);
-        return service.create(vote, userId);
+        return service.create(vote, userId, restaurantId);
     }
 
-    public void update(Vote vote, int userId) {
-        log.info("update {} with id={}", vote, userId);
+    public void update(Vote vote) {
+        int userId = SecurityUtil.authUserId();
+        int restaurantId = SecurityUtil.authRestaurantId();
+        log.info("update {} by user {} restaurant {}", vote, userId, restaurantId);
         assureIdConsistent(vote, userId);
-        service.update(vote, userId);
+        service.update(vote, userId, restaurantId);
     }
 
-    public void delete(int id, int userId) {
+    public void delete(int id) {
+        int userId = SecurityUtil.authUserId();
         log.info("delete {}", id);
         service.delete(id, userId);
     }
 
-    public Vote get(int id, int userId) {
+    public Vote get(int id) {
+        int userId = SecurityUtil.authUserId();
         log.info("get {}", id);
         return service.get(id, userId);
     }
 
-    public List<Vote> getAll(int userId) {
+    public List<Vote> getAll() {
+        int userId = SecurityUtil.authUserId();
         log.info("getAll");
         return service.getAll(userId);
     }

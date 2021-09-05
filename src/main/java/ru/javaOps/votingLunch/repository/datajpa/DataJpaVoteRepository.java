@@ -10,18 +10,21 @@ import java.util.List;
 public class DataJpaVoteRepository implements VoteRepository {
     private final CrudVoteRepository crudVoteRepository;
     private final CrudUserRepository crudUserRepository;
+    private final CrudRestaurantRepository crudRestaurantRepository;
 
-    public DataJpaVoteRepository(CrudVoteRepository crudVoteRepository, CrudUserRepository crudUserRepository) {
+    public DataJpaVoteRepository(CrudVoteRepository crudVoteRepository, CrudUserRepository crudUserRepository, CrudRestaurantRepository crudRestaurantRepository) {
         this.crudVoteRepository = crudVoteRepository;
         this.crudUserRepository = crudUserRepository;
+        this.crudRestaurantRepository = crudRestaurantRepository;
     }
 
     @Override
-    public Vote save(Vote vote, int userId) {
+    public Vote save(Vote vote, int userId, int restaurantId) {
         if (!vote.isNew() && get(vote.getId(), userId) == null) {
             return null;
         }
         vote.setUser(crudUserRepository.getById(userId));
+        vote.setRestaurant(crudRestaurantRepository.getById(restaurantId));
         return crudVoteRepository.save(vote);
     }
 

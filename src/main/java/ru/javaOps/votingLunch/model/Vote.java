@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "vote")
+@Table(name = "votes")
 public class Vote extends AbstractBaseEntity {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -37,6 +37,10 @@ public class Vote extends AbstractBaseEntity {
         this.user = user;
         this.restaurant = restaurant;
         this.dateTime = dateTime;
+    }
+
+    public Vote(Vote v) {
+        this(v.id, v.user, v.restaurant, v.dateTime);
     }
 
     public User getUser() {

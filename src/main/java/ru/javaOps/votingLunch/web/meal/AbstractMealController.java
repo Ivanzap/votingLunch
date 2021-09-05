@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ru.javaOps.votingLunch.model.Meal;
 import ru.javaOps.votingLunch.service.MealService;
+import ru.javaOps.votingLunch.util.SecurityUtil;
 
 import java.util.List;
 
@@ -20,20 +21,23 @@ public abstract class AbstractMealController {
     private MealService service;
 
     public Meal create(Meal meal) {
-        log.info("create {}", meal);
+        int userId = SecurityUtil.authUserId();
+        log.info("create {} by user {}", meal, userId);
         checkNew(meal);
-        return service.create(meal);
+        return service.create(meal, userId);
     }
 
     public void update(Meal meal, int id) {
+        int userId = SecurityUtil.authUserId();
         log.info("update {} with id={}", meal, id);
         assureIdConsistent(meal, id);
-        service.update(meal);
+        service.update(meal, userId);
     }
 
     public void delete(int id) {
-        log.info("delete {}", id);
-        service.delete(id);
+        int userId = SecurityUtil.authUserId();
+        log.info("delete {} by user {}", id, userId);
+        service.delete(id, userId);
     }
 
     public Meal get(int id) {

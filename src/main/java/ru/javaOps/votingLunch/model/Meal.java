@@ -44,6 +44,10 @@ public class Meal extends AbstractNameEntity {
         this.dateTime = dateTime;
     }
 
+    public Meal(Meal m) {
+        this(m.id, m.name, m.restaurant, m.price, m.dateTime);
+    }
+
     public Restaurant getRestaurant() {
         return restaurant;
     }
@@ -70,5 +74,13 @@ public class Meal extends AbstractNameEntity {
 
     public LocalDate getDate() {
         return dateTime.toLocalDate();
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

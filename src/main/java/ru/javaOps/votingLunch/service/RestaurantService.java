@@ -17,16 +17,16 @@ public class RestaurantService {
         this.repository = repository;
     }
 
-    public Restaurant create(Restaurant restaurant) {
-        return repository.save(restaurant);
+    public Restaurant create(Restaurant restaurant, int userId) {
+        return repository.save(restaurant, userId);
     }
 
-    public void update(Restaurant restaurant) {
-        checkNotFoundWithId(repository.save(restaurant), restaurant.getId());
+    public void update(Restaurant restaurant, int userId) {
+        checkNotFoundWithId(repository.save(restaurant, userId), restaurant.getId());
     }
 
-    public void delete(int id) {
-        checkNotFoundWithId(repository.delete(id), id);
+    public void delete(int id, int userId) {
+        checkNotFoundWithId(repository.delete(id, userId), id);
     }
 
     public Restaurant get(int id) {
