@@ -15,7 +15,7 @@ import ru.javaOps.votingLunch.util.exception.NotFoundException;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThrows;
 import static ru.javaOps.votingLunch.RestaurantTestData.*;
 import static ru.javaOps.votingLunch.UserTestData.ADMIN_ID;
 import static ru.javaOps.votingLunch.UserTestData.USER_ID1;
@@ -40,27 +40,28 @@ public class RestaurantServiceTest {
         int newId = created.getId();
         Restaurant newRes = getNew();
         newRes.setId(newId);
-        assertMatch(created, newRes);
-        assertMatch(service.get(newId), newRes);
+        MATCHER.assertMatch(created, newRes);
+        MATCHER.assertMatch(service.get(newId), newRes);
     }
 
     @Ignore
     @Test
     public void nonAdminCreate() {
         Restaurant created = service.create(getNew(), USER_ID1);
-        assertMatch(created, null);
+        MATCHER.assertMatch(created, null);
     }
 
     @Test
     public void update() {
         Restaurant updated = getUpdated();
         service.update(updated, ADMIN_ID);
-        assertMatch(service.get(RESTAURANT_ID1), getUpdated());
+        MATCHER.assertMatch(service.get(RESTAURANT_ID1), getUpdated());
     }
 
     @Ignore
     @Test
-    public void nonAdminUpdate() {}
+    public void nonAdminUpdate() {
+    }
 
     @Test
     public void delete() {
@@ -70,17 +71,18 @@ public class RestaurantServiceTest {
 
     @Ignore
     @Test
-    public void nonAdminDelete() {}
+    public void nonAdminDelete() {
+    }
 
     @Test
     public void get() {
         Restaurant restaurant = service.get(RESTAURANT_ID1);
-        assertMatch(restaurant, RestaurantTestData.res1);
+        MATCHER.assertMatch(restaurant, RestaurantTestData.res1);
     }
 
     @Test
     public void getAll() {
         List<Restaurant> all = service.getAll();
-        assertMatch(all, res3, res4, res1, res2);
+        MATCHER.assertMatch(all, res3, res4, res1, res2);
     }
 }

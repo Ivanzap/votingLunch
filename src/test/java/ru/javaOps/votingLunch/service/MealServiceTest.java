@@ -37,8 +37,8 @@ public class MealServiceTest {
         int newId = created.getId();
         Meal newMeal = getNew();
         newMeal.setId(newId);
-        assertMatch(created, newMeal);
-        assertMatch(service.get(newId), newMeal);
+        MATCHER.assertMatch(created, newMeal);
+        MATCHER.assertMatch(service.get(newId), newMeal);
     }
 
     @Ignore
@@ -50,12 +50,13 @@ public class MealServiceTest {
     public void update() {
         Meal updated = getUpdated();
         service.update(updated, ADMIN_ID);
-        assertMatch(service.get(MEAL_RES1_ID1), getUpdated());
+        MATCHER.assertMatch(service.get(MEAL_RES1_ID1), getUpdated());
     }
 
     @Ignore
     @Test
-    public void nonAdminUpdate() {}
+    public void nonAdminUpdate() {
+    }
 
     @Test
     public void delete() {
@@ -65,12 +66,13 @@ public class MealServiceTest {
 
     @Ignore
     @Test
-    public void nonAdminDelete() {}
+    public void nonAdminDelete() {
+    }
 
     @Test
     public void get() {
         Meal meal = service.get(MEAL_RES1_ID1);
-        assertMatch(meal, MealTestData.mealRes1_1);
+        MATCHER.assertMatch(meal, MealTestData.mealRes1_1);
     }
 
     @Ignore

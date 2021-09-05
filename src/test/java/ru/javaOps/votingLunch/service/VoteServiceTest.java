@@ -14,10 +14,11 @@ import ru.javaOps.votingLunch.util.exception.NotFoundException;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
-import static ru.javaOps.votingLunch.VoteTestData.*;
-import static ru.javaOps.votingLunch.RestaurantTestData.*;
+import static org.junit.Assert.assertThrows;
+import static ru.javaOps.votingLunch.RestaurantTestData.RESTAURANT_ID1;
+import static ru.javaOps.votingLunch.RestaurantTestData.RESTAURANT_ID2;
 import static ru.javaOps.votingLunch.UserTestData.USER_ID1;
+import static ru.javaOps.votingLunch.VoteTestData.*;
 
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
@@ -39,15 +40,15 @@ public class VoteServiceTest {
         int newId = created.getId();
         Vote newVote = VoteTestData.getNew();
         newVote.setId(newId);
-        assertMatch(created, newVote);
-        assertMatch(service.get(newId, USER_ID1), newVote);
+        MATCHER.assertMatch(created, newVote);
+        MATCHER.assertMatch(service.get(newId, USER_ID1), newVote);
     }
 
     @Test
     public void update() {
         Vote updated = VoteTestData.getUpdated();
         service.update(updated, USER_ID1, RESTAURANT_ID1);
-        assertMatch(service.get(VOTE_USER1, USER_ID1), VoteTestData.getUpdated());
+        MATCHER.assertMatch(service.get(VOTE_USER1, USER_ID1), VoteTestData.getUpdated());
     }
 
     @Test
@@ -59,12 +60,12 @@ public class VoteServiceTest {
     @Test
     public void get() {
         Vote vote = service.get(VOTE_USER1, USER_ID1);
-        assertMatch(vote, voteUser1);
+        MATCHER.assertMatch(vote, voteUser1);
     }
 
     @Test
     public void getAll() {
         List<Vote> all = service.getAll(USER_ID1);
-        assertMatch(all, voteUser1);
+        MATCHER.assertMatch(all, voteUser1);
     }
 }
