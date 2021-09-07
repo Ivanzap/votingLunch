@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import ru.javaOps.votingLunch.model.Meal;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Transactional(readOnly = true)
@@ -16,6 +17,9 @@ public interface CrudMealRepository extends JpaRepository<Meal, Integer> {
     @Query("DELETE FROM Meal m WHERE m.id=:id")
     int delete(@Param("id") int id);
 
-    @Query("SELECT m FROM Meal m WHERE m.restaurant.id=:restaurantId AND m.dateTime=:today ORDER BY m.name")
-    List<Meal> getMenu(@Param("restaurantId") int restaurantId);
+    @Query("SELECT m FROM Meal m WHERE m.restaurant.id=:restaurantId order by m.dateTime")
+    List<Meal> getAllMenuOfRestaurant(@Param("restaurantId") int restaurantId);
+
+    @Query("SELECT m FROM Meal m WHERE m.restaurant.id=:restaurantId AND m.dateTime>=:toDay order by m.dateTime")
+    List<Meal> getMenuTodayOfRestaurant(@Param("restaurantId") int restaurantId, @Param("toDay") LocalDateTime toDay);
 }

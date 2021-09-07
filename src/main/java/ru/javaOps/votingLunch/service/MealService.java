@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.javaOps.votingLunch.model.Meal;
 import ru.javaOps.votingLunch.repository.MealRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static ru.javaOps.votingLunch.util.ValidationUtil.checkNotFoundWithId;
@@ -34,10 +35,14 @@ public class MealService {
     }
 
     public List<Meal> getAll() {
-        return repository.getAll();
+        return repository.getAllMenuOfRestaurant();
     }
 
-    public List<Meal> getMenu(int restaurantId) {
-        return repository.getMenu(restaurantId);
+    public List<Meal> getAllMenuOfRestaurant(int restaurantId) {
+        return repository.getAllMenuOfRestaurant(restaurantId);
+    }
+
+    public List<Meal> getMenuTodayOfRestaurant(int restaurantId, LocalDateTime toDay) {
+        return repository.getMenuTodayOfRestaurant(restaurantId, toDay);
     }
 }

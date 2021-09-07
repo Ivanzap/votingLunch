@@ -11,6 +11,7 @@ public class RestaurantTestData {
     public static final int RESTAURANT_ID2 = START_SEQ + 4;
     public static final int RESTAURANT_ID3 = START_SEQ + 5;
     public static final int RESTAURANT_ID4 = START_SEQ + 6;
+    public static final int NOT_FOUND = 10;
 
     public static final Restaurant res1 = new Restaurant(RESTAURANT_ID1, "Victoria");
     public static final Restaurant res2 = new Restaurant(RESTAURANT_ID2, "White Eagle");

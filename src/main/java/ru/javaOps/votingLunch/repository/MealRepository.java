@@ -2,6 +2,7 @@ package ru.javaOps.votingLunch.repository;
 
 import ru.javaOps.votingLunch.model.Meal;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface MealRepository {
@@ -12,7 +13,9 @@ public interface MealRepository {
 
     Meal get(int id);
 
-    List<Meal> getAll();
+    List<Meal> getAllMenuOfRestaurant();
 
-    List<Meal> getMenu(int restaurantId);
+    List<Meal> getAllMenuOfRestaurant(int restaurantId);
+
+    List<Meal> getMenuTodayOfRestaurant(int restaurantId, LocalDateTime toDay);
 }

@@ -6,6 +6,8 @@ import ru.javaOps.votingLunch.model.Meal;
 import ru.javaOps.votingLunch.model.Role;
 import ru.javaOps.votingLunch.repository.MealRepository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -46,12 +48,17 @@ public class DataJpaMealRepository implements MealRepository {
     }
 
     @Override
-    public List<Meal> getAll() {
+    public List<Meal> getAllMenuOfRestaurant() {
         return crudMealRepository.findAll(SORT_NAME);
     }
 
     @Override
-    public List<Meal> getMenu(int restaurantId) {
-        return crudMealRepository.getMenu(restaurantId);
+    public List<Meal> getAllMenuOfRestaurant(int restaurantId) {
+        return crudMealRepository.getAllMenuOfRestaurant(restaurantId);
+    }
+
+    @Override
+    public List<Meal> getMenuTodayOfRestaurant(int restaurantId, LocalDateTime toDay) {
+        return crudMealRepository.getMenuTodayOfRestaurant(restaurantId, toDay);
     }
 }

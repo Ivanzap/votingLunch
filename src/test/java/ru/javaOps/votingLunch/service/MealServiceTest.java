@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.junit.rules.ExternalResource;
 import org.junit.rules.Stopwatch;
 import org.junit.runner.RunWith;
-import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
@@ -18,9 +17,13 @@ import ru.javaOps.votingLunch.TimingRules;
 import ru.javaOps.votingLunch.model.Meal;
 import ru.javaOps.votingLunch.util.exception.NotFoundException;
 
+import java.util.List;
+
 import static org.junit.Assert.assertThrows;
 import static ru.javaOps.votingLunch.MealTestData.*;
+import static ru.javaOps.votingLunch.RestaurantTestData.RESTAURANT_ID1;
 import static ru.javaOps.votingLunch.UserTestData.ADMIN_ID;
+import static ru.javaOps.votingLunch.UserTestData.NOT_FOUND;
 
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
@@ -55,7 +58,7 @@ public class MealServiceTest {
     public void update() {
         Meal updated = getUpdated();
         service.update(updated, ADMIN_ID);
-        MATCHER.assertMatch(service.get(MEAL_RES1_ID1), getUpdated());
+        MATCHER.assertMatch(service.get(MEAL_TODAY_RES1_ID1), getUpdated());
     }
 
     @Ignore
@@ -65,8 +68,14 @@ public class MealServiceTest {
 
     @Test
     public void delete() {
-        service.delete(MEAL_RES1_ID1, ADMIN_ID);
-        assertThrows(NotFoundException.class, () -> service.get(MEAL_RES1_ID1));
+        service.delete(MEAL_TODAY_RES1_ID1, ADMIN_ID);
+        assertThrows(NotFoundException.class, () -> service.get(MEAL_TODAY_RES1_ID1));
+    }
+
+    @Ignore
+    @Test
+    public void deletedNotFound() {
+        assertThrows(NotFoundException.class, () -> service.delete(NOT_FOUND, ADMIN_ID));
     }
 
     @Ignore
@@ -76,8 +85,8 @@ public class MealServiceTest {
 
     @Test
     public void get() {
-        Meal meal = service.get(MEAL_RES1_ID1);
-        MATCHER.assertMatch(meal, MealTestData.mealRes1_1);
+        Meal meal = service.get(MEAL_TODAY_RES1_ID1);
+        MATCHER.assertMatch(meal, MealTestData.mealTodayRes1_1);
     }
 
     @Ignore
@@ -86,7 +95,14 @@ public class MealServiceTest {
     }
 
     @Test
-    public void getMenu() {
+    public void getAllMenuOfRestaurant() {
+        List<Meal> allMenuRes = service.getAllMenuOfRestaurant(RESTAURANT_ID1);
+        MATCHER.assertMatch(allMenuRes, MealTestData.meals);
+    }
 
+    @Test
+    public void getMenuTodayOfRestaurant() {
+        List<Meal> menuToday = service.getMenuTodayOfRestaurant(RESTAURANT_ID1, TODAY);
+        MATCHER.assertMatch(menuToday, mealTodayRes1_1, mealTodayRes1_2, mealTodayRes1_3);
     }
 }

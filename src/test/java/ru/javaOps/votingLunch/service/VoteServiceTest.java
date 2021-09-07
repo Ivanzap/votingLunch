@@ -21,8 +21,9 @@ import java.util.List;
 import static org.junit.Assert.assertThrows;
 import static ru.javaOps.votingLunch.RestaurantTestData.RESTAURANT_ID1;
 import static ru.javaOps.votingLunch.RestaurantTestData.RESTAURANT_ID2;
-import static ru.javaOps.votingLunch.UserTestData.USER_ID1;
+import static ru.javaOps.votingLunch.UserTestData.*;
 import static ru.javaOps.votingLunch.VoteTestData.*;
+import static ru.javaOps.votingLunch.VoteTestData.MATCHER;
 
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
@@ -59,6 +60,11 @@ public class VoteServiceTest {
     public void delete() {
         service.delete(VOTE_USER1, USER_ID1);
         assertThrows(NotFoundException.class, () -> service.get(VOTE_USER1, USER_ID1));
+    }
+
+    @Test
+    public void deletedNotFound() {
+        assertThrows(NotFoundException.class, () -> service.delete(VoteTestData.NOT_FOUND, ADMIN_ID));
     }
 
     @Test

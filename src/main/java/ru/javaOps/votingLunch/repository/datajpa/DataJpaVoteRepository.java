@@ -4,6 +4,8 @@ import org.springframework.stereotype.Repository;
 import ru.javaOps.votingLunch.model.Vote;
 import ru.javaOps.votingLunch.repository.VoteRepository;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Repository
@@ -20,7 +22,11 @@ public class DataJpaVoteRepository implements VoteRepository {
 
     @Override
     public Vote save(Vote vote, int userId, int restaurantId) {
-        if (!vote.isNew() && get(vote.getId(), userId) == null) {
+        if (!vote.isNew() && get(vote.getId(), userId) == null
+                || !vote.getDateTime().toLocalDate().equals(LocalDate.now())) {
+            return null;
+        }
+        if (!vote.isNew() && vote.getDateTime().toLocalTime().isAfter(LocalTime.of(11, 0, 0))) {
             return null;
         }
         vote.setUser(crudUserRepository.getById(userId));
@@ -36,7 +42,7 @@ public class DataJpaVoteRepository implements VoteRepository {
     @Override
     public Vote get(int id, int userId) {
         return crudVoteRepository.findById(id)
-                .filter(vote -> vote.getUser().getId() == userId)
+                .filter(vote -> vote.getUser().getId() == userId && vote.getDateTime().toLocalDate().equals(LocalDate.now()))
                 .orElse(null);
     }
 

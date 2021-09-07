@@ -8,6 +8,9 @@ import ru.javaOps.votingLunch.model.Meal;
 import ru.javaOps.votingLunch.service.MealService;
 import ru.javaOps.votingLunch.util.SecurityUtil;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import static ru.javaOps.votingLunch.util.ValidationUtil.assureIdConsistent;
@@ -50,8 +53,14 @@ public abstract class AbstractMealController {
         return service.getAll();
     }
 
-    public List<Meal> getMenu(int restaurantId) {
-        log.info("getMenu {}", restaurantId);
-        return service.getMenu(restaurantId);
+    public List<Meal> getAllMenuOfRestaurant(int restaurantId) {
+        log.info("getAllMenuOfRestaurant {}", restaurantId);
+        return service.getAllMenuOfRestaurant(restaurantId);
+    }
+
+    public List<Meal> getMenuTodayOfRestaurant(int restaurantId) {
+        LocalDateTime toDay = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
+        log.info("getMenuTodayOfRestaurant {}", restaurantId);
+        return service.getMenuTodayOfRestaurant(restaurantId, toDay);
     }
 }

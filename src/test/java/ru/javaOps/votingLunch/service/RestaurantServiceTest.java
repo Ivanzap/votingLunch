@@ -23,6 +23,7 @@ import java.util.List;
 import static org.junit.Assert.assertThrows;
 import static ru.javaOps.votingLunch.RestaurantTestData.*;
 import static ru.javaOps.votingLunch.UserTestData.ADMIN_ID;
+import static ru.javaOps.votingLunch.UserTestData.NOT_FOUND;
 import static ru.javaOps.votingLunch.UserTestData.USER_ID1;
 
 @RunWith(SpringRunner.class)
@@ -72,6 +73,12 @@ public class RestaurantServiceTest {
     public void delete() {
         service.delete(RESTAURANT_ID1, ADMIN_ID);
         assertThrows(NotFoundException.class, () -> service.get(RESTAURANT_ID1));
+    }
+
+    @Ignore
+    @Test
+    public void deletedNotFound() {
+        assertThrows(NotFoundException.class, () -> service.delete(NOT_FOUND, ADMIN_ID));
     }
 
     @Ignore

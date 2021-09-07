@@ -83,4 +83,14 @@ public class Meal extends AbstractNameEntity {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "Meal{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", dateTime=" + dateTime +
+                '}';
+    }
 }
