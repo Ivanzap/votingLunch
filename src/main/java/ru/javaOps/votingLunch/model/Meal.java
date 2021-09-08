@@ -1,5 +1,6 @@
 package ru.javaOps.votingLunch.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.javaOps.votingLunch.util.DateTimeUtil;
 
@@ -12,11 +13,13 @@ import java.time.LocalDateTime;
 @Table(name = "meals")
 public class Meal extends AbstractNameEntity {
     @NotNull
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @NotNull
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;

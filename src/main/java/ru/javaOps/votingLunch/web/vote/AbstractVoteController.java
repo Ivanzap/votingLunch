@@ -8,12 +8,14 @@ import ru.javaOps.votingLunch.model.Vote;
 import ru.javaOps.votingLunch.service.VoteService;
 import ru.javaOps.votingLunch.util.SecurityUtil;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import static ru.javaOps.votingLunch.util.ValidationUtil.assureIdConsistent;
 import static ru.javaOps.votingLunch.util.ValidationUtil.checkNew;
 
-@Controller
 public abstract class AbstractVoteController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -28,11 +30,11 @@ public abstract class AbstractVoteController {
         return service.create(vote, userId, restaurantId);
     }
 
-    public void update(Vote vote) {
+    public void update(Vote vote, int id) {
         int userId = SecurityUtil.authUserId();
         int restaurantId = SecurityUtil.authRestaurantId();
         log.info("update {} by user {} restaurant {}", vote, userId, restaurantId);
-        assureIdConsistent(vote, userId);
+        assureIdConsistent(vote, id);
         service.update(vote, userId, restaurantId);
     }
 
@@ -52,5 +54,11 @@ public abstract class AbstractVoteController {
         int userId = SecurityUtil.authUserId();
         log.info("getAll");
         return service.getAll(userId);
+    }
+
+    public List<Vote> getAllVotesToday() {
+        LocalDateTime toDay = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
+        log.info("getAllVotesToday");
+        return service.getAllVotesToday(toDay);
     }
 }

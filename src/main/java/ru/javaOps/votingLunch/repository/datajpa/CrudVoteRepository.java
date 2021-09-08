@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import ru.javaOps.votingLunch.model.Vote;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Transactional(readOnly = true)
@@ -18,4 +19,7 @@ public interface CrudVoteRepository extends JpaRepository<Vote, Integer> {
 
     @Query("SELECT v FROM Vote v WHERE v.user.id=:userId ORDER BY v.dateTime DESC")
     List<Vote> getAll(@Param("userId") int userId);
+
+    @Query("SELECT v FROM Vote v WHERE v.dateTime>=:toDay")
+    List<Vote> getAllVotesToday(@Param("toDay") LocalDateTime toDay);
 }

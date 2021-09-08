@@ -3,7 +3,6 @@ package ru.javaOps.votingLunch.web.restaurant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import ru.javaOps.votingLunch.model.Restaurant;
 import ru.javaOps.votingLunch.service.RestaurantService;
 import ru.javaOps.votingLunch.util.SecurityUtil;
@@ -13,7 +12,6 @@ import java.util.List;
 import static ru.javaOps.votingLunch.util.ValidationUtil.assureIdConsistent;
 import static ru.javaOps.votingLunch.util.ValidationUtil.checkNew;
 
-@Controller
 public abstract class AbstractRestaurantController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 

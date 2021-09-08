@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.javaOps.votingLunch.model.Vote;
 import ru.javaOps.votingLunch.repository.VoteRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static ru.javaOps.votingLunch.util.ValidationUtil.checkNotFoundWithId;
@@ -35,5 +36,9 @@ public class VoteService {
 
     public List<Vote> getAll(int userId) {
         return repository.getAll(userId);
+    }
+
+    public List<Vote> getAllVotesToday(LocalDateTime toDay) {
+        return repository.getAllVotesToday(toDay);
     }
 }

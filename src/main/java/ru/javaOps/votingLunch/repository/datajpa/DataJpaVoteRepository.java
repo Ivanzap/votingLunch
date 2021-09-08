@@ -5,6 +5,7 @@ import ru.javaOps.votingLunch.model.Vote;
 import ru.javaOps.votingLunch.repository.VoteRepository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -49,5 +50,10 @@ public class DataJpaVoteRepository implements VoteRepository {
     @Override
     public List<Vote> getAll(int userId) {
         return crudVoteRepository.getAll(userId);
+    }
+
+    @Override
+    public List<Vote> getAllVotesToday(LocalDateTime toDay) {
+        return crudVoteRepository.getAllVotesToday(toDay);
     }
 }

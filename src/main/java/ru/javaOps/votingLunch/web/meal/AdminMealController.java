@@ -1,23 +1,23 @@
-package ru.javaOps.votingLunch.web.user;
+package ru.javaOps.votingLunch.web.meal;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import ru.javaOps.votingLunch.model.User;
+import ru.javaOps.votingLunch.model.Meal;
 
 import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = AdminRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class AdminRestController extends AbstractUserController {
-    public static final String REST_URL = "/rest/admin/users";
+@RequestMapping(value = AdminMealController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class AdminMealController extends AbstractMealController {
+    static final String REST_URL = "/rest/admin/meals";
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> createWithLocation(@RequestBody User user) {
-        User created = super.create(user);
+    public ResponseEntity<Meal> createWithLocation(@RequestBody Meal meal) {
+        Meal created = super.create(meal);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
@@ -27,8 +27,8 @@ public class AdminRestController extends AbstractUserController {
     @Override
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody User user, @PathVariable int id) {
-        super.update(user, id);
+    public void update(@RequestBody Meal meal, @PathVariable int id) {
+        super.update(meal, id);
     }
 
     @Override
@@ -40,19 +40,25 @@ public class AdminRestController extends AbstractUserController {
 
     @Override
     @GetMapping("/{id}")
-    public User get(@PathVariable int id) {
+    public Meal get(@PathVariable int id) {
         return super.get(id);
     }
 
     @Override
-    @GetMapping("/by")
-    public User getByEmail(@RequestParam String email) {
-        return super.getByEmail(email);
+    @GetMapping
+    public List<Meal> getAll() {
+        return super.getAll();
     }
 
     @Override
-    @GetMapping
-    public List<User> getAll() {
-        return super.getAll();
+    @GetMapping("/restaurant/all_menu/{restaurantId}")
+    public List<Meal> getAllMenuOfRestaurant(@PathVariable int restaurantId) {
+        return super.getAllMenuOfRestaurant(restaurantId);
+    }
+
+    @Override
+    @GetMapping("/restaurant/today_menu/{restaurantId}")
+    public List<Meal> getMenuTodayOfRestaurant(@PathVariable int restaurantId) {
+        return super.getMenuTodayOfRestaurant(restaurantId);
     }
 }

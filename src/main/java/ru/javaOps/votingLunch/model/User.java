@@ -1,5 +1,6 @@
 package ru.javaOps.votingLunch.model;
 
+import org.hibernate.annotations.BatchSize;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
@@ -38,6 +39,7 @@ public class User extends AbstractNameEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
             uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "role"}, name = "user_roles_idx")})
+    @BatchSize(size = 200)
     private Set<Role> roles;
 
     public User() {
