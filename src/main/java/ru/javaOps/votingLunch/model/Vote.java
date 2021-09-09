@@ -7,6 +7,7 @@ import ru.javaOps.votingLunch.util.DateTimeUtil;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "votes")
@@ -68,5 +69,19 @@ public class Vote extends AbstractBaseEntity {
 
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Vote vote = (Vote) o;
+        return Objects.equals(dateTime, vote.dateTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), dateTime);
     }
 }

@@ -20,6 +20,6 @@ public interface CrudVoteRepository extends JpaRepository<Vote, Integer> {
     @Query("SELECT v FROM Vote v WHERE v.user.id=:userId ORDER BY v.dateTime DESC")
     List<Vote> getAll(@Param("userId") int userId);
 
-    @Query("SELECT v FROM Vote v WHERE v.dateTime>=:toDay")
+    @Query("SELECT v FROM Vote v WHERE v.dateTime>=:toDay ORDER BY v.dateTime DESC")
     List<Vote> getAllVotesToday(@Param("toDay") LocalDateTime toDay);
 }

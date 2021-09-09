@@ -1,6 +1,7 @@
 package ru.javaOps.votingLunch.service;
 
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExternalResource;
@@ -21,9 +22,9 @@ import java.util.List;
 import static org.junit.Assert.assertThrows;
 import static ru.javaOps.votingLunch.RestaurantTestData.RESTAURANT_ID1;
 import static ru.javaOps.votingLunch.RestaurantTestData.RESTAURANT_ID2;
-import static ru.javaOps.votingLunch.UserTestData.*;
+import static ru.javaOps.votingLunch.UserTestData.ADMIN_ID;
+import static ru.javaOps.votingLunch.UserTestData.USER_ID1;
 import static ru.javaOps.votingLunch.VoteTestData.*;
-import static ru.javaOps.votingLunch.VoteTestData.MATCHER;
 
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
@@ -77,5 +78,12 @@ public class VoteServiceTest {
     public void getAll() {
         List<Vote> all = service.getAll(USER_ID1);
         MATCHER.assertMatch(all, voteUser1);
+    }
+
+    @Ignore
+    @Test
+    public void getAllVotesToday() {
+        List<Vote> allToday = service.getAllVotesToday(TODAY);
+        MATCHER.assertMatch(allToday, votesToday);
     }
 }
