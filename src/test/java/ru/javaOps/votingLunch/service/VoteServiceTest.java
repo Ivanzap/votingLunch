@@ -26,16 +26,7 @@ import static ru.javaOps.votingLunch.UserTestData.ADMIN_ID;
 import static ru.javaOps.votingLunch.UserTestData.USER_ID1;
 import static ru.javaOps.votingLunch.VoteTestData.*;
 
-@RunWith(SpringRunner.class)
-@Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-@ContextConfiguration({"classpath:spring/spring-app.xml", "classpath:spring/spring-db.xml"})
-public class VoteServiceTest {
-
-    @ClassRule
-    public static ExternalResource summary = TimingRules.SUMMARY;
-
-    @Rule
-    public Stopwatch stopwatch = TimingRules.STOPWATCH;
+public class VoteServiceTest extends AbstractServiceTest {
 
     @Autowired
     VoteService service;

@@ -1,19 +1,9 @@
 package ru.javaOps.votingLunch.service;
 
-import org.junit.ClassRule;
 import org.junit.Ignore;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExternalResource;
-import org.junit.rules.Stopwatch;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.junit4.SpringRunner;
 import ru.javaOps.votingLunch.MealTestData;
-import ru.javaOps.votingLunch.TimingRules;
 import ru.javaOps.votingLunch.model.Meal;
 import ru.javaOps.votingLunch.util.exception.NotFoundException;
 
@@ -25,16 +15,7 @@ import static ru.javaOps.votingLunch.RestaurantTestData.RESTAURANT_ID1;
 import static ru.javaOps.votingLunch.UserTestData.ADMIN_ID;
 import static ru.javaOps.votingLunch.UserTestData.NOT_FOUND;
 
-@RunWith(SpringRunner.class)
-@Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-@ContextConfiguration({"classpath:spring/spring-app.xml", "classpath:spring/spring-db.xml"})
-public class MealServiceTest {
-
-    @ClassRule
-    public static ExternalResource summary = TimingRules.SUMMARY;
-
-    @Rule
-    public Stopwatch stopwatch = TimingRules.STOPWATCH;
+public class MealServiceTest extends AbstractServiceTest {
 
     @Autowired
     MealService service;

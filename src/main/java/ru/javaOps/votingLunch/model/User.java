@@ -1,6 +1,8 @@
 package ru.javaOps.votingLunch.model;
 
 import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
@@ -13,8 +15,9 @@ import java.util.Date;
 import java.util.EnumSet;
 import java.util.Set;
 
+//@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "users_unique_email_idx")})
 public class User extends AbstractNameEntity {
     @Column(name = "email", nullable = false, unique = true)
     @Email
@@ -35,11 +38,12 @@ public class User extends AbstractNameEntity {
     private boolean enabled = true;
 
     @Column(name = "role")
+    @BatchSize(size = 200)
     @Enumerated(EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
             uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "role"}, name = "user_roles_idx")})
-    @BatchSize(size = 200)
     private Set<Role> roles;
 
     public User() {
@@ -112,9 +116,7 @@ public class User extends AbstractNameEntity {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
                 ", registered=" + registered +
-                ", enabled=" + enabled +
                 ", roles=" + roles +
                 '}';
     }

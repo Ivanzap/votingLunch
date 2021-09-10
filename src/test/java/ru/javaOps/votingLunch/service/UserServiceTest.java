@@ -1,41 +1,34 @@
 package ru.javaOps.votingLunch.service;
 
-import org.junit.ClassRule;
-import org.junit.Rule;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.rules.ExternalResource;
-import org.junit.rules.Stopwatch;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.dao.DataAccessException;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.junit4.SpringRunner;
-import ru.javaOps.votingLunch.TimingRules;
 import ru.javaOps.votingLunch.UserTestData;
 import ru.javaOps.votingLunch.model.Role;
 import ru.javaOps.votingLunch.model.User;
 import ru.javaOps.votingLunch.util.exception.NotFoundException;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.Assert.assertThrows;
 import static ru.javaOps.votingLunch.UserTestData.*;
 
-@RunWith(SpringRunner.class)
-@Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-@ContextConfiguration({"classpath:spring/spring-app.xml", "classpath:spring/spring-db.xml"})
-public class UserServiceTest {
-
-    @ClassRule
-    public static ExternalResource summary = TimingRules.SUMMARY;
-
-    @Rule
-    public Stopwatch stopwatch = TimingRules.STOPWATCH;
+public class UserServiceTest extends AbstractServiceTest {
 
     @Autowired
     private UserService service;
+
+    @Autowired
+    private CacheManager cacheManager;
+
+    @Before
+    public void setUp() throws Exception {
+        Objects.requireNonNull(cacheManager.getCache("users")).clear();
+    }
 
     @Test
     public void create() {
@@ -92,5 +85,12 @@ public class UserServiceTest {
     public void getAll() {
         List<User> all = service.getAll();
         MATCHER.assertMatch(all, admin, user1, user2);
+    }
+
+    @Test
+    public void createWithException() throws Exception {
+        validateRootCause(() -> service.create(new User(null, "  ", "user@yandex.ru", "password", Role.USER)), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new User(null, "User 1", "  ", "password", Role.USER)), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new User(null, "User 1", "user@yandex.ru", "  ", Role.USER)), ConstraintViolationException.class);
     }
 }
