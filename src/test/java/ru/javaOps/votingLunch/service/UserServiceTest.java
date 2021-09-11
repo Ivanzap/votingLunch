@@ -93,4 +93,10 @@ public class UserServiceTest extends AbstractServiceTest {
         validateRootCause(() -> service.create(new User(null, "User 1", "  ", "password", Role.USER)), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new User(null, "User 1", "user@yandex.ru", "  ", Role.USER)), ConstraintViolationException.class);
     }
+
+    @Test
+    public void getWithVotes() {
+        User user1WithVotes = service.getWithVotes(USER_ID1);
+        VOTES_MATCHER.assertMatch(user1WithVotes, user1);
+    }
 }

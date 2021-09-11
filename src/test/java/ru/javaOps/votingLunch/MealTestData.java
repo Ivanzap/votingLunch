@@ -11,7 +11,7 @@ import static ru.javaOps.votingLunch.RestaurantTestData.res1;
 import static ru.javaOps.votingLunch.model.AbstractBaseEntity.START_SEQ;
 
 public class MealTestData {
-    public static final MatcherFactory<Meal> MATCHER = MatcherFactory.usingIgnoringFieldsComparator("restaurant", "user");
+    public static final MatcherFactory.Matcher<Meal> MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Meal.class, "restaurant", "user");
 
     public static final LocalDateTime TODAY = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
 

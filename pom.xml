@@ -21,6 +21,7 @@
         <spring.version>5.3.8</spring.version>
         <spring-data-jpa.version>2.5.2</spring-data-jpa.version>
         <jackson.version>2.12.4</jackson.version>
+        <tomcat.version>9.0.48</tomcat.version>
 
         <!-- Logging -->
         <logback.version>1.2.3</logback.version>
@@ -115,18 +116,25 @@
             <artifactId>spring-webmvc</artifactId>
         </dependency>
 
+        <!--Web-->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-servlet-api</artifactId>
+            <version>${tomcat.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+
         <!-- Data base-->
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
             <version>2.3.4</version>
-        </dependency>
-
-        <!--JSON-->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
         </dependency>
 
         <!--Test-->
@@ -184,6 +192,23 @@
             <artifactId>ehcache</artifactId>
             <!--            <scope>runtime</scope>-->
             <version>${ehcache.version}</version>
+        </dependency>
+
+        <!--JSON-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-hibernate5</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
     </dependencies>
 

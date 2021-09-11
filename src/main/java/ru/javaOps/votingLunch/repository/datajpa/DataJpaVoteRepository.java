@@ -27,7 +27,7 @@ public class DataJpaVoteRepository implements VoteRepository {
                 || !vote.getDateTime().toLocalDate().equals(LocalDate.now())) {
             return null;
         }
-        if (!vote.isNew() && vote.getDateTime().toLocalTime().isAfter(LocalTime.of(11, 0, 0))) {
+        if (vote.getDateTime().toLocalTime().isAfter(LocalTime.of(11, 0, 0))) {
             return null;
         }
         vote.setUser(crudUserRepository.getById(userId));

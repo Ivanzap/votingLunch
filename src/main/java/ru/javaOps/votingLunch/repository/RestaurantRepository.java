@@ -8,7 +8,7 @@ public interface RestaurantRepository {
 
     Restaurant save(Restaurant restaurant, int userId);
 
-    Boolean delete(int id, int userId);
+    boolean delete(int id, int userId);
 
     Restaurant get(int id);
 

@@ -33,9 +33,9 @@ public class DataJpaRestaurantRepository implements RestaurantRepository {
     }
 
     @Override
-    public Boolean delete(int id, int userId) {
+    public boolean delete(int id, int userId) {
         if (!crudUserRepository.findById(userId).orElseThrow().getRoles().contains(Role.ADMIN)) {
-            return null;
+            return false;
         }
         return crudRestaurantRepository.delete(id) != 0;
     }

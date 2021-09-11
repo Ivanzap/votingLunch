@@ -1,18 +1,8 @@
 package ru.javaOps.votingLunch.service;
 
-import org.junit.ClassRule;
 import org.junit.Ignore;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExternalResource;
-import org.junit.rules.Stopwatch;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.junit4.SpringRunner;
-import ru.javaOps.votingLunch.TimingRules;
 import ru.javaOps.votingLunch.VoteTestData;
 import ru.javaOps.votingLunch.model.Vote;
 import ru.javaOps.votingLunch.util.exception.NotFoundException;
@@ -42,10 +32,22 @@ public class VoteServiceTest extends AbstractServiceTest {
     }
 
     @Test
+    public void createAfterTime() {
+        Vote created = service.create(VoteTestData.getNewAfterTime(), USER_ID1, RESTAURANT_ID2);
+        MATCHER.assertMatch(created, null);
+    }
+
+    @Test
     public void update() {
         Vote updated = VoteTestData.getUpdated();
         service.update(updated, USER_ID1, RESTAURANT_ID1);
         MATCHER.assertMatch(service.get(VOTE_USER1, USER_ID1), VoteTestData.getUpdated());
+    }
+
+    @Test
+    public void updateAfterTime() {
+        Vote updated = VoteTestData.getUpdatedAfterTime();
+        assertThrows(NotFoundException.class, () -> service.update(updated, USER_ID1, RESTAURANT_ID1));
     }
 
     @Test
@@ -60,9 +62,24 @@ public class VoteServiceTest extends AbstractServiceTest {
     }
 
     @Test
+    public void deleteNotOwn() {
+        assertThrows(NotFoundException.class, () -> service.delete(VOTE_ADMIN, USER_ID1));
+    }
+
+    @Test
     public void get() {
         Vote vote = service.get(VOTE_USER1, USER_ID1);
         MATCHER.assertMatch(vote, voteUser1);
+    }
+
+    @Test
+    public void getNotFound() {
+        assertThrows(NotFoundException.class, () -> service.get(NOT_FOUND, ADMIN_ID));
+    }
+
+    @Test
+    public void getNotOwn() {
+        assertThrows(NotFoundException.class, () -> service.get(VOTE_ADMIN, USER_ID1));
     }
 
     @Test

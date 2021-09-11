@@ -5,7 +5,7 @@ import ru.javaOps.votingLunch.model.Restaurant;
 import static ru.javaOps.votingLunch.model.AbstractBaseEntity.START_SEQ;
 
 public class RestaurantTestData {
-    public static final MatcherFactory<Restaurant> MATCHER = MatcherFactory.usingIgnoringFieldsComparator("registered", "user");
+    public static final MatcherFactory.Matcher<Restaurant> MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Restaurant.class, "registered", "user");
 
     public static final int RESTAURANT_ID1 = START_SEQ + 3;
     public static final int RESTAURANT_ID2 = START_SEQ + 4;

@@ -12,7 +12,7 @@ import static ru.javaOps.votingLunch.UserTestData.*;
 import static ru.javaOps.votingLunch.model.AbstractBaseEntity.START_SEQ;
 
 public class VoteTestData {
-    public static final MatcherFactory<Vote> MATCHER = MatcherFactory.usingIgnoringFieldsComparator("restaurant", "user");
+    public static final MatcherFactory.Matcher<Vote> MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Vote.class, "restaurant", "user");
     public static final LocalDateTime TODAY = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
 
     public static final int VOTE_USER1 = START_SEQ + 31;
@@ -34,10 +34,22 @@ public class VoteTestData {
                 LocalDate.now().atTime(10, 20));
     }
 
+    public static Vote getNewAfterTime() {
+        return new Vote(null, user1, res2,
+                LocalDate.now().atTime(11, 20));
+    }
+
     public static Vote getUpdated() {
         Vote updated = new Vote(voteUser1);
         updated.setRestaurant(res1);
         updated.setDateTime(LocalDate.now().atTime(9, 20));
+        return updated;
+    }
+
+    public static Vote getUpdatedAfterTime() {
+        Vote updated = new Vote(voteUser1);
+        updated.setRestaurant(res1);
+        updated.setDateTime(LocalDate.now().atTime(11, 20));
         return updated;
     }
 }

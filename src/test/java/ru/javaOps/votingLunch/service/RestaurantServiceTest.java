@@ -1,20 +1,8 @@
 package ru.javaOps.votingLunch.service;
 
-import org.junit.ClassRule;
-import org.junit.Ignore;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExternalResource;
-import org.junit.rules.Stopwatch;
-import org.junit.runner.RunWith;
-import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.junit4.SpringRunner;
 import ru.javaOps.votingLunch.RestaurantTestData;
-import ru.javaOps.votingLunch.TimingRules;
 import ru.javaOps.votingLunch.model.Restaurant;
 import ru.javaOps.votingLunch.util.exception.NotFoundException;
 
@@ -23,7 +11,6 @@ import java.util.List;
 import static org.junit.Assert.assertThrows;
 import static ru.javaOps.votingLunch.RestaurantTestData.*;
 import static ru.javaOps.votingLunch.UserTestData.ADMIN_ID;
-import static ru.javaOps.votingLunch.UserTestData.NOT_FOUND;
 import static ru.javaOps.votingLunch.UserTestData.USER_ID1;
 
 public class RestaurantServiceTest extends AbstractServiceTest {
@@ -41,7 +28,6 @@ public class RestaurantServiceTest extends AbstractServiceTest {
         MATCHER.assertMatch(service.get(newId), newRes);
     }
 
-    @Ignore
     @Test
     public void nonAdminCreate() {
         Restaurant created = service.create(getNew(), USER_ID1);
@@ -55,9 +41,10 @@ public class RestaurantServiceTest extends AbstractServiceTest {
         MATCHER.assertMatch(service.get(RESTAURANT_ID1), getUpdated());
     }
 
-    @Ignore
     @Test
     public void nonAdminUpdate() {
+        Restaurant updated = getUpdated();
+        assertThrows(NotFoundException.class, () -> service.update(updated, USER_ID1));
     }
 
     @Test
@@ -66,15 +53,14 @@ public class RestaurantServiceTest extends AbstractServiceTest {
         assertThrows(NotFoundException.class, () -> service.get(RESTAURANT_ID1));
     }
 
-    @Ignore
     @Test
     public void deletedNotFound() {
-        assertThrows(NotFoundException.class, () -> service.delete(NOT_FOUND, ADMIN_ID));
+        assertThrows(NotFoundException.class, () -> service.delete(RestaurantTestData.NOT_FOUND, ADMIN_ID));
     }
 
-    @Ignore
     @Test
     public void nonAdminDelete() {
+        assertThrows(NotFoundException.class, () -> service.delete(RESTAURANT_ID1, USER_ID1));
     }
 
     @Test

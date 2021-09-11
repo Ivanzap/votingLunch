@@ -41,4 +41,8 @@ public class UserService {
     public List<User> getAll() {
         return repository.getAll();
     }
+
+    public User getWithVotes(int id) {
+        return checkNotFoundWithId(repository.getWithVotes(id), id);
+    }
 }

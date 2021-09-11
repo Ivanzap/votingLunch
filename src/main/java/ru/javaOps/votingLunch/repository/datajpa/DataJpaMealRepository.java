@@ -6,7 +6,6 @@ import ru.javaOps.votingLunch.model.Meal;
 import ru.javaOps.votingLunch.model.Role;
 import ru.javaOps.votingLunch.repository.MealRepository;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -35,9 +34,9 @@ public class DataJpaMealRepository implements MealRepository {
     }
 
     @Override
-    public Boolean delete(int id, int userId) {
+    public boolean delete(int id, int userId) {
         if (!crudUserRepository.findById(userId).orElseThrow().getRoles().contains(Role.ADMIN)) {
-            return null;
+            return false;
         }
         return crudMealRepository.delete(id) != 0;
     }
