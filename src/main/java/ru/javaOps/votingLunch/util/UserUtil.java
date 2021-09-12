@@ -2,6 +2,7 @@ package ru.javaOps.votingLunch.util;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
+import ru.javaOps.votingLunch.model.Role;
 import ru.javaOps.votingLunch.model.User;
 import ru.javaOps.votingLunch.to.UserTo;
 

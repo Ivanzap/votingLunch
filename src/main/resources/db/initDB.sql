@@ -33,7 +33,7 @@ CREATE TABLE restaurants
     name      VARCHAR(255)                                    NOT NULL,
     registered TIMESTAMP                   DEFAULT now()      NOT NULL
 );
-CREATE UNIQUE INDEX restaurants_unique_name_idx ON RESTAURANTS (name);
+    CREATE UNIQUE INDEX restaurants_unique_name_idx ON RESTAURANTS (name);
 
 CREATE TABLE meals
 (

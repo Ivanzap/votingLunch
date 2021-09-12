@@ -22,17 +22,15 @@ public abstract class AbstractVoteController {
     @Autowired
     private VoteService service;
 
-    public Vote create(Vote vote) {
+    public Vote create(Vote vote, int restaurantId) {
         int userId = SecurityUtil.authUserId();
-        int restaurantId = SecurityUtil.authRestaurantId();
         log.info("create {} by user {} restaurant {}", vote, userId, restaurantId);
         checkNew(vote);
         return service.create(vote, userId, restaurantId);
     }
 
-    public void update(Vote vote, int id) {
+    public void update(Vote vote, int id, int restaurantId) {
         int userId = SecurityUtil.authUserId();
-        int restaurantId = SecurityUtil.authRestaurantId();
         log.info("update {} by user {} restaurant {}", vote, userId, restaurantId);
         assureIdConsistent(vote, id);
         service.update(vote, userId, restaurantId);

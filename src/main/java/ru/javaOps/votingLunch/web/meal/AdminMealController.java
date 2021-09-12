@@ -51,13 +51,13 @@ public class AdminMealController extends AbstractMealController {
     }
 
     @Override
-    @GetMapping("/restaurant/all_menu/{restaurantId}")
+    @GetMapping("/all_menu/{restaurantId}")
     public List<Meal> getAllMenuOfRestaurant(@PathVariable int restaurantId) {
         return super.getAllMenuOfRestaurant(restaurantId);
     }
 
     @Override
-    @GetMapping("/restaurant/today_menu/{restaurantId}")
+    @GetMapping("/today_menu/{restaurantId}")
     public List<Meal> getMenuTodayOfRestaurant(@PathVariable int restaurantId) {
         return super.getMenuTodayOfRestaurant(restaurantId);
     }

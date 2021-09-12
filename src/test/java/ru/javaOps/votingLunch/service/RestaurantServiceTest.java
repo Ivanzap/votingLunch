@@ -2,6 +2,7 @@ package ru.javaOps.votingLunch.service;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import ru.javaOps.votingLunch.RestaurantTestData;
 import ru.javaOps.votingLunch.model.Restaurant;
 import ru.javaOps.votingLunch.util.exception.NotFoundException;
@@ -26,6 +27,12 @@ public class RestaurantServiceTest extends AbstractServiceTest {
         newRes.setId(newId);
         MATCHER.assertMatch(created, newRes);
         MATCHER.assertMatch(service.get(newId), newRes);
+    }
+
+    @Test
+    public void duplicateNameCreate() {
+        assertThrows(DataAccessException.class, () ->
+                service.create(new Restaurant(null, "Victoria"), ADMIN_ID));
     }
 
     @Test

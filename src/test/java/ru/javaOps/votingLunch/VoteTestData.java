@@ -25,7 +25,7 @@ public class VoteTestData {
     public static final Vote voteUser2 = new Vote(VOTE_USER2, user2, res2,
             LocalDate.now().atTime(10, 0));
     public static final Vote voteAdmin = new Vote(VOTE_ADMIN, admin, res3,
-            LocalDate.now().atTime(9, 0));
+            LocalDate.now().atTime(9, 30));
 
     public static List<Vote> votesToday = List.of(voteUser2, voteAdmin, voteUser1);
 

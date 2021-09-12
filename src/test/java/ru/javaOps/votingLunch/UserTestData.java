@@ -16,7 +16,7 @@ import static ru.javaOps.votingLunch.VoteTestData.*;
 import static ru.javaOps.votingLunch.model.AbstractBaseEntity.START_SEQ;
 
 public class UserTestData {
-    public static final MatcherFactory.Matcher<User> MATCHER = MatcherFactory.usingIgnoringFieldsComparator(User.class, "registered", "roles", "votes");
+    public static final MatcherFactory.Matcher<User> MATCHER = MatcherFactory.usingIgnoringFieldsComparator(User.class, "registered", "roles", "votes", "password");
     public static final MatcherFactory.Matcher<User> VOTES_MATCHER =
             MatcherFactory.usingAssertions(User.class,
                     (a, e) -> assertThat(a).usingRecursiveComparison()

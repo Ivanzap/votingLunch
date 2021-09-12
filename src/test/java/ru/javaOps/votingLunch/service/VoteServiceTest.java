@@ -87,8 +87,7 @@ public class VoteServiceTest extends AbstractServiceTest {
         List<Vote> all = service.getAll(USER_ID1);
         MATCHER.assertMatch(all, voteUser1);
     }
-
-    @Ignore
+    
     @Test
     public void getAllVotesToday() {
         List<Vote> allToday = service.getAllVotesToday(TODAY);

@@ -21,7 +21,7 @@ public class ProfileMealController extends AbstractMealController {
     }
 
     @Override
-    @GetMapping("/restaurant/today_menu/{restaurantId}")
+    @GetMapping("/today_menu/{restaurantId}")
     public List<Meal> getMenuTodayOfRestaurant(@PathVariable int restaurantId) {
         return super.getMenuTodayOfRestaurant(restaurantId);
     }
