@@ -1,6 +1,8 @@
 package ru.javaOps.votingLunch.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import ru.javaOps.votingLunch.View;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -13,9 +15,9 @@ public class Restaurant extends AbstractNameEntity {
     @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()")
     private Date registered = new Date();
 
-    @NotNull
-    @JsonIgnore
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull(groups = View.Persist.class)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 

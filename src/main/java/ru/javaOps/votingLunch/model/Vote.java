@@ -1,26 +1,27 @@
 package ru.javaOps.votingLunch.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
+import ru.javaOps.votingLunch.View;
 import ru.javaOps.votingLunch.util.DateTimeUtil;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Entity
 @Table(name = "votes")
 public class Vote extends AbstractBaseEntity {
-    @NotNull
-    @JsonIgnore
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull(groups = View.Persist.class)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @NotNull
-    @JsonIgnore
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull(groups = View.Persist.class)
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
 
