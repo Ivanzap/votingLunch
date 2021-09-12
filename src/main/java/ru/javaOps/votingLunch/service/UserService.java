@@ -9,7 +9,7 @@ import java.util.List;
 import static ru.javaOps.votingLunch.util.ValidationUtil.checkNotFound;
 import static ru.javaOps.votingLunch.util.ValidationUtil.checkNotFoundWithId;
 
-@Service
+@Service("userService")
 public class UserService {
 
     private final UserRepository repository;

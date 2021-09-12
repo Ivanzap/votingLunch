@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = AdminMealController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminMealController extends AbstractMealController {
-    static final String REST_URL = "/rest/admin/meals";
+    static final String REST_URL = "/rest/admin/restaurants/meals";
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Meal> createWithLocation(@RequestBody Meal meal) {
