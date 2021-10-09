@@ -4,28 +4,20 @@
              xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
+    <http pattern="/resources/**" security="none"/>
     <http pattern="/webjars/**" security="none"/>
 
-    <http pattern="/**" use-expressions="true" name="restSecurityFilterChain" create-session="stateless">
+    <http pattern="/rest/**" use-expressions="true" name="restSecurityFilterChain" create-session="stateless">
         <http-basic/>
-        <intercept-url pattern="/restaurants" method="GET" access="permitAll()"/>
-        <intercept-url pattern="/restaurants/**" method="GET" access="permitAll()"/>
-
-        <intercept-url pattern="/restaurants/meals/**" method="GET" access="permitAll()"/>
-        <intercept-url pattern="/restaurants/meals/**" method="DELETE" access="hasRole('ADMIN')"/>
-        <intercept-url pattern="/restaurants/meals/**" method="POST" access="hasRole('ADMIN')"/>
-
-        <intercept-url pattern="/restaurants/votes" method="GET" access="permitAll()"/>
-        <intercept-url pattern="/restaurants/votes/**" method="GET" access="permitAll()"/>
-        <intercept-url pattern="/restaurants/votes/**" method="POST" access="isAuthenticated()"/>
-
-        <intercept-url pattern="/users/profile/**" access="isAuthenticated()"/>
-        <intercept-url pattern="/users/register" access="permitAll()"/>
+        <intercept-url pattern="/rest/admin/**" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/rest/profile/register" access="isAnonymous()"/>
+        <intercept-url pattern="/**" access="isAuthenticated()"/>
         <csrf disabled="true"/>
     </http>
 
-    <beans:bean class="org.springframework.security.crypto.factory.PasswordEncoderFactories" id="passwordEncoder"
-                factory-method="createDelegatingPasswordEncoder"/>
+<!--    <beans:bean class="org.springframework.security.crypto.password.NoOpPasswordEncoder" id="passwordEncoder"/>-->
+
+    <beans:bean class="org.springframework.security.crypto.factory.PasswordEncoderFactories" id="passwordEncoder" factory-method="createDelegatingPasswordEncoder"/>
 
     <authentication-manager>
         <authentication-provider user-service-ref="userService">
