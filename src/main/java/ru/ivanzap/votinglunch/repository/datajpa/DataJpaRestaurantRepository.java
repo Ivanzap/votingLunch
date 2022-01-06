@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.ivanzap.votinglunch.model.Restaurant;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -33,8 +34,12 @@ public class DataJpaRestaurantRepository {
         return crudRestaurantRepository.findById(id).orElse(null);
     }
 
-    public Restaurant getWithDishes(int id) {
-        return crudRestaurantRepository.getWithDishes(id);
+    public Restaurant getWithDishes(int id, LocalDate date) {
+        return crudRestaurantRepository.getWithDishes(id, date);
+    }
+
+    public List<Restaurant> getAllWithDishes(LocalDate date) {
+        return crudRestaurantRepository.getAllWithDishes(date);
     }
 
     public List<Restaurant> getAll() {

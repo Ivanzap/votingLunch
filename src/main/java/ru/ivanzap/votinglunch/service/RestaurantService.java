@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.ivanzap.votinglunch.model.Restaurant;
 import ru.ivanzap.votinglunch.repository.datajpa.DataJpaRestaurantRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static ru.ivanzap.votinglunch.util.validation.ValidationUtil.checkNotFoundWithId;
@@ -34,7 +35,11 @@ public class RestaurantService {
     }
 
     public Restaurant getWithDishes(int id) {
-        return checkNotFoundWithId(repository.getWithDishes(id), id);
+        return checkNotFoundWithId(repository.getWithDishes(id, LocalDate.now()), id);
+    }
+
+    public List<Restaurant> getAllWithDishes() {
+        return repository.getAllWithDishes(LocalDate.now());
     }
 
     public List<Restaurant> getAll() {

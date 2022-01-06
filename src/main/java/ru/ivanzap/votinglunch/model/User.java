@@ -1,6 +1,7 @@
 package ru.ivanzap.votinglunch.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -30,10 +31,12 @@ public class User extends AbstractNameEntity implements HasIdAndEmail {
     @NotBlank
     @Size(min = 5, max = 100)
     @Column(name = "password", nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @NotNull
-    @Column(name = "registered", nullable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @Column(name = "registered", nullable = false, columnDefinition = "TIMESTAMP DEFAULT now()", updatable = false)
     private Date registered = new Date();
 
     @Column(name = "enabled", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
@@ -42,6 +45,7 @@ public class User extends AbstractNameEntity implements HasIdAndEmail {
     @Column(name = "role")
     @BatchSize(size = 200)
     @Enumerated(EnumType.STRING)
+    @JoinColumn(name = "user_id")
     @ElementCollection(fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
@@ -131,6 +135,7 @@ public class User extends AbstractNameEntity implements HasIdAndEmail {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", registered=" + registered +
+                ", enabled=" + enabled +
                 ", roles=" + roles +
                 '}';
     }

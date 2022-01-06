@@ -7,45 +7,41 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import static ru.ivanzap.votinglunch.model.AbstractBaseEntity.START_SEQ;
-import static ru.ivanzap.votinglunch.testdata.RestaurantTestData.res1;
-import static ru.ivanzap.votinglunch.testdata.RestaurantTestData.res2;
-import static ru.ivanzap.votinglunch.testdata.UserTestData.user1;
+import static ru.ivanzap.votinglunch.testdata.RestaurantTestData.*;
+import static ru.ivanzap.votinglunch.testdata.UserTestData.*;
 
 public class VoteTestData {
-    public static final MatcherFactory.Matcher<Vote> MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Vote.class, "restaurant", "user");
+    public static final MatcherFactory.Matcher<Vote> MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Vote.class, "restaurant", "user", "time");
     public static final LocalTime DEADLINE = LocalTime.of(11, 0);
 
-    public static final int VOTE_USER1 = START_SEQ + 31;
-    public static final int VOTE_USER2 = START_SEQ + 32;
-    public static final int VOTE_ADMIN = START_SEQ + 33;
+    public static final int VOTE_ID_USER_1_YESTERDAY = START_SEQ + 31;
+    public static final int VOTE_ID_ADMIN_YESTERDAY = START_SEQ + 32;
+    public static final int VOTE_ID_USER_2_YESTERDAY = START_SEQ + 33;
+    public static final int VOTE_ID_USER_1_TODAY = START_SEQ + 34;
+    public static final int VOTE_ID_ADMIN_TODAY = START_SEQ + 35;
     public static final int NOT_FOUND = 10;
 
-    public static final Vote voteUser1 = new Vote(VOTE_USER1, user1, res2,
+    public static final Vote VOTE_USER_1_YESTERDAY = new Vote(VOTE_ID_USER_1_YESTERDAY, user1, res1,
+            LocalDate.now().minusDays(1), LocalTime.of(9, 40));
+    public static final Vote VOTE_USER_1_TODAY = new Vote(VOTE_ID_USER_1_TODAY, user1, res2,
             LocalDate.now(), LocalTime.of(9, 0));
+    public static final Vote VOTE_USER_2_YESTERDAY = new Vote(VOTE_ID_USER_2_YESTERDAY, user2, res2,
+            LocalDate.now().minusDays(1), LocalTime.of(8, 0));
+    public static final Vote VOTE_ADMIN_YESTERDAY = new Vote(VOTE_ID_ADMIN_YESTERDAY, admin, res1,
+            LocalDate.now().minusDays(1), LocalTime.of(8, 35));
+    public static final Vote VOTE_ADMIN_TODAY = new Vote(VOTE_ID_ADMIN_TODAY, admin, res3,
+            LocalDate.now(), LocalTime.of(9, 30));
 
     public static Vote getNew() {
         return new Vote(null, null, null,
-                LocalDate.now(), LocalTime.of(10, 20));
-    }
-
-    public static Vote getNewAfterTime() {
-        return new Vote(null, user1, res2,
-                LocalDate.now(), LocalTime.of(11, 20));
+                LocalDate.now(), LocalTime.now());
     }
 
     public static Vote getUpdated() {
-        Vote updated = new Vote(voteUser1);
+        Vote updated = new Vote(VOTE_USER_1_YESTERDAY);
         updated.setRestaurant(res1);
         updated.setDate(LocalDate.now());
         updated.setTime(LocalTime.of(9, 20));
-        return updated;
-    }
-
-    public static Vote getUpdatedAfterTime() {
-        Vote updated = new Vote(voteUser1);
-        updated.setRestaurant(res1);
-        updated.setDate(LocalDate.now());
-        updated.setTime(LocalTime.of(11, 20));
         return updated;
     }
 }

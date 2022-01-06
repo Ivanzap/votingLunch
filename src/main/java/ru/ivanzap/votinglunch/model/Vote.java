@@ -1,7 +1,6 @@
 package ru.ivanzap.votinglunch.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import ru.ivanzap.votinglunch.View;
@@ -12,10 +11,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "votes", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date"}, name = "votes_unique_user_date_idx")})
+@Table(name = "votes", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date_vote"}, name = "votes_unique_user_date_idx")})
 public class Vote extends AbstractBaseEntity {
-
-    public static final LocalTime DEADLINE = LocalTime.of(11, 0);
 
     @ManyToOne(fetch = FetchType.LAZY)
     @NotNull(groups = View.Persist.class)
@@ -31,19 +28,13 @@ public class Vote extends AbstractBaseEntity {
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
 
-    @JsonView(View.JsonREST.class)
-    @Column(name = "date", nullable = false)
+    @Column(name = "date_vote", nullable = false)
     private LocalDate date;
 
-    @JsonView(View.JsonREST.class)
-    @Column(name = "time", nullable = false)
+    @Column(name = "time_vote", nullable = false)
     private LocalTime time;
 
     public Vote() {
-    }
-
-    public Vote(Integer id) {
-        super(id);
     }
 
     public Vote(Integer id, User user, Restaurant restaurant, LocalDate date, LocalTime time) {

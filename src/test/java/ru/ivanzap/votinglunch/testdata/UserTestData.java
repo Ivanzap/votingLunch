@@ -3,21 +3,18 @@ package ru.ivanzap.votinglunch.testdata;
 import ru.ivanzap.votinglunch.MatcherFactory;
 import ru.ivanzap.votinglunch.model.Role;
 import ru.ivanzap.votinglunch.model.User;
-import ru.ivanzap.votinglunch.model.Vote;
+import ru.ivanzap.votinglunch.to.UserTo;
+import ru.ivanzap.votinglunch.web.json.JsonUtil;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static ru.ivanzap.votinglunch.model.AbstractBaseEntity.START_SEQ;
-import static ru.ivanzap.votinglunch.testdata.RestaurantTestData.res2;
-import static ru.ivanzap.votinglunch.testdata.RestaurantTestData.res3;
 
 public class UserTestData {
-    public static final MatcherFactory.Matcher<User> MATCHER = MatcherFactory.usingIgnoringFieldsComparator(User.class, "registered", "roles", "votes", "password");
+    public static final MatcherFactory.Matcher<User> MATCHER = MatcherFactory.usingIgnoringFieldsComparator(User.class, "registered", "votes", "password");
     public static final MatcherFactory.Matcher<User> VOTES_MATCHER =
             MatcherFactory.usingAssertions(User.class,
                     (a, e) -> assertThat(a).usingRecursiveComparison()
@@ -41,22 +38,19 @@ public class UserTestData {
     public static final User admin = new User(ADMIN_ID, "Admin",
             "admin@gmail.com", "admin", Role.ADMIN, Role.USER);
 
-    public static final Vote voteUser1 = new Vote(VoteTestData.VOTE_USER1, user1, res2,
-            LocalDate.now(), LocalTime.of(9, 0));
-    public static final Vote voteUser2 = new Vote(VoteTestData.VOTE_USER2, user2, res2,
-            LocalDate.now(), LocalTime.of(10, 0));
-    public static final Vote voteAdmin = new Vote(VoteTestData.VOTE_ADMIN, admin, res3,
-            LocalDate.now(), LocalTime.of(9, 0));
-
     static {
-        user1.setVotes(List.of(voteUser1));
-        user2.setVotes(List.of(voteUser2));
-        admin.setVotes(List.of(voteAdmin));
+        user1.setVotes(Arrays.asList(VoteTestData.VOTE_USER_1_YESTERDAY, VoteTestData.VOTE_USER_1_TODAY));
+        user2.setVotes(Arrays.asList(VoteTestData.VOTE_USER_2_YESTERDAY));
+        admin.setVotes(Arrays.asList(VoteTestData.VOTE_ADMIN_YESTERDAY, VoteTestData.VOTE_ADMIN_TODAY));
     }
 
     public static User getNew() {
         return new User(null, "New", "new@gmail.com", "newPass",
                 false, new Date(), Collections.singleton(Role.USER));
+    }
+
+    public static UserTo getNewTo() {
+        return new UserTo(null, "newName", "newemail@ya.ru", "newPassword");
     }
 
     public static User getUpdated() {
@@ -67,5 +61,13 @@ public class UserTestData {
         updated.setEnabled(false);
         updated.setRoles(Collections.singletonList(Role.ADMIN));
         return updated;
+    }
+
+    public static UserTo getUpdatedTo() {
+        return new UserTo(null, "Update Name", user1.getEmail(), "newPass");
+    }
+
+    public static String jsonWithPassword(User user, String passw) {
+        return JsonUtil.writeAdditionProps(user, "password", passw);
     }
 }

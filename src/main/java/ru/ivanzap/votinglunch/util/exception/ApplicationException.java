@@ -9,7 +9,7 @@ public class ApplicationException extends RuntimeException {
     private final String[] args;
 
     public ApplicationException(String msgCode, ErrorType validationError) {
-        this(ErrorType.APP_ERROR, msgCode);
+        this(validationError, msgCode);
     }
 
     public ApplicationException(ErrorType type, String msgCode, String... args) {

@@ -7,19 +7,18 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import ru.ivanzap.votinglunch.HasIdAndEmail;
 import ru.ivanzap.votinglunch.model.User;
-import ru.ivanzap.votinglunch.repository.datajpa.CrudUserRepository;
+import ru.ivanzap.votinglunch.repository.datajpa.DataJpaUserRepository;
 import ru.ivanzap.votinglunch.util.SecurityUtil;
-import ru.ivanzap.votinglunch.web.ExceptionInfoHandler;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Component
 public class UniqueMailValidator implements org.springframework.validation.Validator {
 
-    private final CrudUserRepository repository;
+    private final DataJpaUserRepository repository;
     private final HttpServletRequest request;
 
-    public UniqueMailValidator(CrudUserRepository repository, @Nullable HttpServletRequest request) {
+    public UniqueMailValidator(DataJpaUserRepository repository, @Nullable HttpServletRequest request) {
         this.repository = repository;
         this.request = request;
     }
@@ -47,7 +46,7 @@ public class UniqueMailValidator implements org.springframework.validation.Valid
                     if (requestURI.endsWith("/" + dbId) || (dbId == SecurityUtil.get().getId() && requestURI.contains("/profile")))
                         return;
                 }
-                errors.rejectValue("email", ExceptionInfoHandler.EXCEPTION_DUPLICATE_EMAIL);
+                errors.rejectValue("email", "exception.user.duplicateEmail");
             }
         }
     }

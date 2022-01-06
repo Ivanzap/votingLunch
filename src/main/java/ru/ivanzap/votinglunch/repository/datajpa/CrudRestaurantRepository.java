@@ -8,6 +8,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import ru.ivanzap.votinglunch.model.Restaurant;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Transactional(readOnly = true)
 public interface CrudRestaurantRepository extends JpaRepository<Restaurant, Integer> {
     @Modifying
@@ -16,6 +19,10 @@ public interface CrudRestaurantRepository extends JpaRepository<Restaurant, Inte
     int delete(@Param("id") int id);
 
     @EntityGraph(attributePaths = {"menu"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT r FROM Restaurant r WHERE r.id=?1")
-    Restaurant getWithDishes(int id);
+    @Query("SELECT r FROM Restaurant r JOIN r.menu d ON r.id=?1 AND d.date=?2")
+    Restaurant getWithDishes(int id, LocalDate date);
+
+    @EntityGraph(attributePaths = {"menu"}, type = EntityGraph.EntityGraphType.LOAD)
+    @Query("SELECT r FROM Restaurant r JOIN r.menu d ON d.date=?1")
+    List<Restaurant> getAllWithDishes(LocalDate date);
 }

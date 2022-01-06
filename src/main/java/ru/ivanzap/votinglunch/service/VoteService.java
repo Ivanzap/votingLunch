@@ -8,12 +8,13 @@ import ru.ivanzap.votinglunch.repository.datajpa.DataJpaVoteRepository;
 import java.time.LocalTime;
 import java.util.List;
 
-import static ru.ivanzap.votinglunch.model.Vote.DEADLINE;
 import static ru.ivanzap.votinglunch.util.validation.ValidationUtil.checkNotFound;
 import static ru.ivanzap.votinglunch.util.validation.ValidationUtil.checkNotFoundWithId;
 
 @Service
 public class VoteService {
+
+    public static final LocalTime DEADLINE = LocalTime.of(11, 0);
 
     private final DataJpaVoteRepository repository;
 
@@ -23,7 +24,6 @@ public class VoteService {
 
     public Vote create(Vote vote, int userId, int restaurantId) {
         Assert.notNull(vote, "vote must not be null");
-        Assert.isTrue(LocalTime.now().isBefore(DEADLINE), "It's too late to create you vote");
         return repository.save(vote, userId, restaurantId);
     }
 

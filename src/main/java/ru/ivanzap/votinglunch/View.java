@@ -10,7 +10,4 @@ public class View {
     // Validate only when DB save/update
     public interface Persist extends Default {
     }
-
-    public interface JsonREST {
-    }
 }

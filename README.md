@@ -16,26 +16,6 @@ changed Each restaurant provides a new menu each day.
 
 ### curl samples (application deployed at application context `votinglunch`).
 
-#### get All Users
-
-'curl -s http://localhost:8080/votinglunch/rest/admin/users --user admin@gmail.com:admin'
-
-#### get Users 100001
-
-'curl -s http://localhost:8080/votinglunch/rest/admin/users/100001 --user admin@gmail.com:admin'
-
-#### get Admin profile with votes
-
-'curl -s http://localhost:8080/votinglunch/rest/admin/users/100001/with-votes --user admin@gmail.com:admin'
-
-#### get Profile
-
-'curl -s http://localhost:8080/votinglunch/rest/profile --user user@yandex.ru:password'
-
-#### get Profile with votes
-
-'curl -s http://localhost:8080/votinglunch/rest/profile/with-votes --user user@yandex.ru:password'
-
 #### get all restaurants Admin
 
 'curl -s http://localhost:8080/votinglunch/rest/admin/restaurants --user admin@gmail.com:admin'
@@ -68,25 +48,18 @@ changed Each restaurant provides a new menu each day.
 
 'curl -s http://localhost:8080/votinglunch/rest/restaurants/100005 --user user@yandex.ru:password'
 
+#### get restaurant Profile 100005 with dishes
+
+'curl -s http://localhost:8080/votinglunch/rest/restaurants/100005/with-dishes --user user@yandex.ru:password'
+
+#### get restaurant Profile all with dishes
+
+'curl -s http://localhost:8080/votinglunch/rest/restaurants/all-with-dishes --user user@yandex.ru:password'
+
+
 #### get restaurant not found
 
 'curl -s -v http://localhost:8080/topjava/rest/restaurants/100009 --user user@yandex.ru:password'
-
-#### get dishes today of restaurant 100005
-
-'curl -s http://localhost:8080/votinglunch/rest/dishes/100005/today --user user@yandex.ru:password'
-
-#### get dish of 100021 of restaurant 100005
-
-'curl -s http://localhost:8080/votinglunch/rest/dishes/100005/100021 --user user@yandex.ru:password'
-
-#### get filter dishes of restaurant 100005 of 2021-10-03 09:00:00
-
-'curl -s http://localhost:8080/votinglunch/rest/dishes/100005/filter?date=2021-10-03 --user user@yandex.ru:password'
-
-#### get dishes not found
-
-'curl -s http://localhost:8080/votinglunch/rest/dishes/100005/10002 --user user@yandex.ru:password'
 
 #### create dish Admin
 
@@ -102,7 +75,7 @@ changed Each restaurant provides a new menu each day.
 
 #### get all dishes of restaurant 100005
 
-'curl -s http://localhost:8080/votinglunch/rest/dishes/100005/today --user user@yandex.ru:password'
+'curl -s http://localhost:8080/votinglunch/rest/admin/dishes/100005/today --user admin@gmail.com:admin'
 
 #### get votes
 
@@ -114,7 +87,7 @@ changed Each restaurant provides a new menu each day.
 
 #### get vote today
 
-'curl -s http://localhost:8080/votinglunch/rest/votes/today --user user@yandex.ru:password'
+'curl -s http://localhost:8080/votinglunch/rest/votes/today --user admin@gmail.com:admin'
 
 #### create vote
 
@@ -127,3 +100,23 @@ changed Each restaurant provides a new menu each day.
 #### delete vote
 
 'curl -s -X DELETE http://localhost:8080/votinglunch/rest/votes/100031 --user user@yandex.ru:password'
+
+#### get All Users
+
+'curl -s http://localhost:8080/votinglunch/rest/admin/users --user admin@gmail.com:admin'
+
+#### get Users 100001
+
+'curl -s http://localhost:8080/votinglunch/rest/admin/users/100001 --user admin@gmail.com:admin'
+
+#### get Admin profile with votes
+
+'curl -s http://localhost:8080/votinglunch/rest/admin/users/100001/with-votes --user admin@gmail.com:admin'
+
+#### get Profile
+
+'curl -s http://localhost:8080/votinglunch/rest/profile --user user@yandex.ru:password'
+
+#### get Profile with votes
+
+'curl -s http://localhost:8080/votinglunch/rest/profile/with-votes --user user@yandex.ru:password'

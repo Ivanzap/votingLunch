@@ -53,6 +53,12 @@ public class AdminRestaurantController extends AbstractRestaurantController {
     }
 
     @Override
+    @GetMapping("/all-with-dishes")
+    public List<Restaurant> getAllWithDishes() {
+        return super.getAllWithDishes();
+    }
+
+    @Override
     @GetMapping
     public List<Restaurant> getAll() {
         return super.getAll();

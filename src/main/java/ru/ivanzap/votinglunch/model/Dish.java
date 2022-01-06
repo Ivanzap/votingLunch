@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "dishes", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "date"}, name = "dishes_unique_name_date_idx")})
+@Table(name = "dishes", uniqueConstraints = {@UniqueConstraint(columnNames = {"date_dish", "restaurant_id", "name"}, name = "dishes_unique_date_restaurant_name_idx")})
 public class Dish extends AbstractNameEntity {
 
     @JsonBackReference("Restaurant_dish_reference")
@@ -21,7 +21,7 @@ public class Dish extends AbstractNameEntity {
     private int price;
 
     @NotNull
-    @Column(name = "date", nullable = false)
+    @Column(name = "date_dish", nullable = false)
     private LocalDate date;
 
     public Dish() {

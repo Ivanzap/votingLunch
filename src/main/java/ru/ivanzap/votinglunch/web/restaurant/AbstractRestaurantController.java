@@ -44,6 +44,11 @@ public abstract class AbstractRestaurantController {
         return service.getWithDishes(id);
     }
 
+    public List<Restaurant> getAllWithDishes() {
+        log.info("getAllWithDishes");
+        return service.getAllWithDishes();
+    }
+
     public List<Restaurant> getAll() {
         log.info("getAll");
         return service.getAll();
